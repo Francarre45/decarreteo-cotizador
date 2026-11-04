@@ -110,14 +110,14 @@ def inject_user():
 # -------------------------------------------------------------------- seed
 
 def seed_admin():
+    # INSERT OR IGNORE evita que dos workers de gunicorn arrancando al mismo
+    # tiempo choquen entre sí al intentar crear el mismo admin (UNIQUE email).
     conn = get_db()
-    existing = conn.execute("SELECT id FROM users WHERE email = ?", ("fran166carre@gmail.com",)).fetchone()
-    if not existing:
-        conn.execute(
-            "INSERT INTO users (name, email, password_hash, phone, is_admin, can_view_all) VALUES (?,?,?,?,1,1)",
-            ("Francisco Carreño", "fran166carre@gmail.com", generate_password_hash("decarreteo2026"), "+54 9 3518 72-5838"),
-        )
-        conn.commit()
+    conn.execute(
+        "INSERT OR IGNORE INTO users (name, email, password_hash, phone, is_admin, can_view_all) VALUES (?,?,?,?,1,1)",
+        ("Francisco Carreño", "fran166carre@gmail.com", generate_password_hash("decarreteo2026"), "+54 9 3518 72-5838"),
+    )
+    conn.commit()
     conn.close()
 
 
