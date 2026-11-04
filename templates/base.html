@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}DeCarreteo{% endblock %} · Cotizador</title>
+<style>
+  :root{
+    --navy:#16305C; --blue:#2F5496; --bluedark:#1c3766; --orange:#F5A623; --orangedark:#ef8a1f;
+    --red:#E0472B; --greytxt:#5A6478; --greytxt2:#7C8AA5; --border:#E4E9F2; --lightbg:#F5F7FB;
+    --notebg:#FFF6E8; --notebd:#F6D8A0; --notetxt:#6B5327;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:'Helvetica Neue',Arial,sans-serif; background:var(--lightbg); color:#26324a; }
+  a { color: var(--blue); text-decoration: none; }
+  .topbar { background: linear-gradient(120deg, var(--blue) 0%, var(--bluedark) 100%); color:#fff; padding:14px 24px; display:flex; justify-content:space-between; align-items:center; }
+  .topbar .brand { font-weight:800; font-size:18px; letter-spacing:.5px; }
+  .topbar .brand span { color: var(--orange); }
+  .topbar nav a { color:#dfe7f7; margin-left:18px; font-size:14px; font-weight:600; }
+  .topbar nav a:hover { color:#fff; }
+  .container { max-width: 920px; margin: 28px auto; padding: 0 20px; }
+  .card { background:#fff; border:1px solid var(--border); border-radius:10px; padding:24px 28px; margin-bottom:20px; }
+  h1 { color: var(--navy); font-size: 22px; }
+  h2 { color: var(--navy); font-size: 16px; border-left:4px solid var(--orange); padding-left:10px; }
+  label { display:block; font-size:13px; font-weight:700; color:var(--navy); margin:14px 0 4px; }
+  input[type=text], input[type=email], input[type=password], input[type=number], textarea, select {
+    width:100%; padding:9px 11px; border:1px solid var(--border); border-radius:6px; font-size:14px; font-family:inherit;
+  }
+  textarea { min-height: 70px; }
+  .btn { display:inline-block; background: linear-gradient(120deg, var(--orange) 0%, var(--orangedark) 100%); color:#fff; border:none; padding:11px 22px; border-radius:7px; font-weight:700; cursor:pointer; font-size:14px; }
+  .btn-secondary { background: var(--navy); }
+  .btn-outline { background:#fff; color:var(--navy); border:1px solid var(--border); }
+  .flash { padding:10px 14px; border-radius:6px; margin-bottom:14px; font-size:14px; }
+  .flash.success { background:#e6f4ea; color:#1e6b36; border:1px solid #bfe3cb; }
+  .flash.error { background:#fdeaea; color:#a02020; border:1px solid #f3c4c4; }
+  .row { display:flex; gap:14px; }
+  .row > * { flex:1; }
+  .hint { font-size:12px; color: var(--greytxt2); margin-top:3px; }
+  table { width:100%; border-collapse: collapse; font-size:14px; }
+  th, td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--border); }
+  th { color:var(--greytxt2); text-transform:uppercase; font-size:11px; letter-spacing:.5px; }
+  .pill { display:inline-block; background:var(--lightbg); border:1px solid var(--border); border-radius:20px; padding:3px 10px; font-size:12px; font-weight:700; color:var(--navy); }
+  .repeat-block { border:1px dashed var(--border); border-radius:8px; padding:14px; margin-bottom:12px; background:#fbfcfe; }
+  .remove-btn { float:right; background:#fdeaea; color:#a02020; border:1px solid #f3c4c4; border-radius:5px; padding:3px 9px; cursor:pointer; font-size:12px; }
+  .checkbox-row { display:flex; align-items:center; gap:8px; margin-top:12px; }
+  .checkbox-row input { width:auto; }
+  .checkbox-row label { margin:0; font-weight:600; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">De<span>Carreteo</span> · Cotizador</div>
+  {% if user %}
+  <nav>
+    <a href="{{ url_for('dashboard') }}">Inicio</a>
+    <a href="{{ url_for('historial') }}">Historial</a>
+    {% if user['is_admin'] %}<a href="{{ url_for('admin_usuarios') }}">Usuarios</a>{% endif %}
+    <a href="{{ url_for('logout') }}">Salir ({{ user['name'] }})</a>
+  </nav>
+  {% endif %}
+</div>
+<div class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</div>
+</body>
+</html>

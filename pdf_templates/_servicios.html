@@ -1,0 +1,10 @@
+{% if servicios %}
+<div class="section">
+  <div class="section-title"><div class="bar"></div><h2>Servicios incluidos</h2></div>
+  <div class="services">
+    {% for s in servicios %}
+    <div class="service-item"><div class="chk">&#10003;</div><span class="txt">{{ s }}</span></div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}

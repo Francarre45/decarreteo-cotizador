@@ -1,0 +1,16 @@
+<div class="header">
+  <img class="logo" src="{{ img_base }}/logo_t.png">
+  <img class="pin" src="{{ img_base }}/plane_t.png">
+</div>
+
+<div class="hero">
+  <div class="eyebrow">{{ eyebrow }}</div>
+  <h1>{{ destino_titulo }}</h1>
+  {% if subtitulo %}<div class="sub">{{ subtitulo }}</div>{% endif %}
+</div>
+
+<div class="facts">
+  <div class="fact-card"><div class="k">Origen</div><div class="v">{{ origen }}</div></div>
+  <div class="fact-card"><div class="k">Fechas</div><div class="v">{{ fechas }}</div></div>
+  <div class="fact-card"><div class="k">Duración total</div><div class="v">{{ duracion }}</div></div>
+</div>

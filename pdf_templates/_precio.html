@@ -1,0 +1,11 @@
+{% if precios %}
+<div class="section">
+  {% if precio_titulo %}<div class="section-title"><div class="bar"></div><h2>{{ precio_titulo }}</h2></div>{% endif %}
+  {% for p in precios %}
+  <div class="price-box" {% if not loop.first %}style="margin-top:4mm;"{% endif %}>
+    <div class="label">{{ p.label|safe }}</div>
+    <div class="amount"><span class="cur">USD</span>{{ p.monto }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}

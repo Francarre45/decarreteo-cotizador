@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h1>Usuarios</h1>
+  <p class="hint">Dale permiso "ve todas" a alguien para que pueda ver el historial completo del equipo, sin hacerlo administrador.</p>
+  <table>
+    <thead><tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Ve todas las cotizaciones</th><th></th></tr></thead>
+    <tbody>
+      {% for u in usuarios %}
+      <tr>
+        <td>{{ u['name'] }}</td>
+        <td>{{ u['email'] }}</td>
+        <td>{% if u['is_admin'] %}<span class="pill">Admin</span>{% else %}Compañero{% endif %}</td>
+        <td>{{ 'Sí' if u['can_view_all'] else 'No' }}</td>
+        <td>
+          {% if not u['is_admin'] %}
+          <form method="post" action="{{ url_for('admin_toggle_ver_todas', user_id=u['id']) }}">
+            <button class="btn btn-outline" type="submit">{{ 'Quitar permiso' if u['can_view_all'] else 'Dar permiso "ve todas"' }}</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

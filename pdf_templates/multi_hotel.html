@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+{% include "_shared_css.html" %}
+</head>
+<body>
+
+{% include "_header_hero_facts.html" %}
+{% include "_servicios.html" %}
+{% include "_vuelos.html" %}
+
+<div class="section">
+  <div class="section-title"><div class="bar"></div><h2>Opciones de alojamiento</h2></div>
+  <div class="hotel-list">
+    {% for h in hoteles %}
+    <div class="hotel-row">
+      <div class="rank">{{ loop.index }}</div>
+      <div class="hotel-info"><div class="name">{{ h.nombre }}</div></div>
+      <div class="tagline">{{ h.regimen }} &middot; {{ h.noches }} noches</div>
+      <div class="price-block"><div class="lbl">Tarifa final</div><div class="amt"><span class="cur">USD</span>{{ h.precio }}</div></div>
+    </div>
+    {% endfor %}
+  </div>
+  {% if hotel_nota %}<div class="hotel-note">{{ hotel_nota }}</div>{% endif %}
+</div>
+
+{% include "_nota.html" %}
+{% include "_pago_cond_cierre.html" %}
+
+</body>
+</html>

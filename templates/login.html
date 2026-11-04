@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:420px;margin:40px auto;">
+  <h1>Iniciar sesión</h1>
+  <form method="post">
+    <label>Email</label>
+    <input type="email" name="email" required autofocus>
+    <label>Contraseña</label>
+    <input type="password" name="password" required>
+    <div style="margin-top:20px;">
+      <button class="btn" type="submit">Entrar</button>
+    </div>
+  </form>
+  <p style="margin-top:16px; font-size:13px;">¿No tenés cuenta? <a href="{{ url_for('registro') }}">Creá una acá</a>.</p>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h1>Nueva cotización · Hotel único</h1>
+  <form method="post">
+    {% include "_form_top.html" %}
+
+    <h2>Hotel previsto</h2>
+    <div class="row">
+      <div><label>Ciudad *</label><input type="text" name="hotel_ciudad" required></div>
+      <div><label>Nombre del hotel *</label><input type="text" name="hotel_nombre" required></div>
+      <div><label>Noches *</label><input type="text" name="hotel_noches" required></div>
+      <div><label>Régimen</label><input type="text" name="hotel_regimen" placeholder="Desayuno / All inclusive"></div>
+    </div>
+
+    <h2>Tarifas</h2>
+    <div id="precios-list"></div>
+    <button type="button" class="btn btn-outline" onclick="addPrecio()">+ Agregar tarifa</button>
+    <input type="hidden" name="precios_count" id="precios_count" value="0">
+    <template id="precio-template">
+      <div class="repeat-block" data-idx="__IDX__">
+        <button type="button" class="remove-btn" onclick="removeAndCount(this,'precios-list','precios_count')">Quitar</button>
+        <div class="row">
+          <div><label>Etiqueta</label><input type="text" name="precio___IDX___label" placeholder="Tarifa por pasajero en base doble"></div>
+          <div><label>Monto (USD)</label><input type="text" name="precio___IDX___monto" placeholder="890"></div>
+        </div>
+      </div>
+    </template>
+
+    {% include "_form_bottom.html" %}
+  </form>
+</div>
+<script src="{{ url_for('static', filename='js/form.js') }}"></script>
+<script>
+  // Si hay un precio por defecto, agregamos uno al cargar
+  addPrecio();
+</script>
+{% endblock %}

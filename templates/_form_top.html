@@ -1,0 +1,99 @@
+{# Bloque común: datos generales + servicios + vuelos. Se incluye en los 3 formularios. #}
+<h2>Datos generales</h2>
+<div class="row">
+  <div>
+    <label>Tipo de eyebrow</label>
+    <select name="tipo_cotizacion">
+      <option value="cotizacion">Cotización de viaje</option>
+      <option value="salida_grupal">Salida Grupal</option>
+      <option value="itinerario">Itinerario de viaje</option>
+    </select>
+  </div>
+  <div>
+    <label>Mes y año del viaje *</label>
+    <input type="text" name="mes_anio" placeholder="Ej: Enero 2027" required>
+  </div>
+</div>
+<label>Destino (título) *</label>
+<input type="text" name="destino" placeholder="Ej: Maceió, Brasil" required>
+<label>Subtítulo (opcional, frase corta y evocadora — nunca el precio acá)</label>
+<input type="text" name="subtitulo" placeholder="Ej: Playas de aguas cálidas y arena blanca...">
+<div class="row">
+  <div>
+    <label>Origen (ciudad de salida) *</label>
+    <input type="text" name="origen" required>
+  </div>
+  <div>
+    <label>Fechas *</label>
+    <input type="text" name="fechas" placeholder="Ej: 10 al 17 de enero" required>
+  </div>
+  <div>
+    <label>Duración total *</label>
+    <input type="text" name="duracion" placeholder="Ej: 7 noches" required>
+  </div>
+</div>
+
+<h2>Servicios incluidos</h2>
+<label>Un servicio por línea *</label>
+<textarea name="servicios" placeholder="Aéreo LATAM: 1 bulto de 23kg incluido&#10;7 noches de alojamiento con desayuno&#10;Traslados aeropuerto - hotel - aeropuerto"></textarea>
+
+<h2>Detalle de vuelos</h2>
+<div class="checkbox-row">
+  <input type="checkbox" name="sin_vuelos" id="sin_vuelos" onchange="document.getElementById('vuelos-container').style.display = this.checked ? 'none' : 'block';">
+  <label for="sin_vuelos" style="margin:0;">Todavía no tengo los datos del vuelo — omitir esta sección en el PDF</label>
+</div>
+<div id="vuelos-container">
+  <div id="vuelos-list"></div>
+  <button type="button" class="btn btn-outline" onclick="addVuelo()">+ Agregar tramo de vuelo</button>
+</div>
+<input type="hidden" name="vuelos_count" id="vuelos_count" value="0">
+
+<template id="vuelo-template">
+  <div class="repeat-block" data-idx="__IDX__">
+    <button type="button" class="remove-btn" onclick="removeAndCount(this,'vuelos-list','vuelos_count')">Quitar</button>
+    <b>Tramo de vuelo</b>
+    <div class="row">
+      <div><label>Etiqueta (ej: IDA · 10 ENE)</label><input type="text" name="vuelo___IDX___tag"></div>
+      <div><label>Aerolínea (nombre)</label><input type="text" name="vuelo___IDX___aerolinea_nombre"></div>
+      <div><label>Logo aerolínea</label>
+        <select name="vuelo___IDX___aerolinea">
+          {% for val, label in aerolineas %}<option value="{{ val }}">{{ label }}</option>{% endfor %}
+        </select>
+      </div>
+      <div><label>N° de vuelo</label><input type="text" name="vuelo___IDX___numero"></div>
+    </div>
+    <div class="row">
+      <div><label>Fecha origen</label><input type="text" name="vuelo___IDX___fecha_origen" placeholder="Vie, 10/01"></div>
+      <div><label>Hora origen</label><input type="text" name="vuelo___IDX___hora_origen" placeholder="08:40"></div>
+      <div><label>IATA origen</label><input type="text" name="vuelo___IDX___iata_origen" placeholder="COR"></div>
+      <div><label>Aeropuerto origen</label><input type="text" name="vuelo___IDX___aeropuerto_origen" placeholder="Ingeniero Taravella · Córdoba · Argentina"></div>
+    </div>
+    <div class="row">
+      <div><label>Fecha destino</label><input type="text" name="vuelo___IDX___fecha_destino" placeholder="Vie, 10/01"></div>
+      <div><label>Hora destino</label><input type="text" name="vuelo___IDX___hora_destino" placeholder="12:10"></div>
+      <div><label>IATA destino</label><input type="text" name="vuelo___IDX___iata_destino" placeholder="MCZ"></div>
+      <div><label>Aeropuerto destino</label><input type="text" name="vuelo___IDX___aeropuerto_destino" placeholder="Zumbi dos Palmares · Maceió · Brasil"></div>
+    </div>
+    <div class="row">
+      <div><label>Duración del tramo</label><input type="text" name="vuelo___IDX___duracion" placeholder="03:30"></div>
+      <div class="checkbox-row" style="margin-top:28px;">
+        <input type="checkbox" name="vuelo___IDX___directo" checked>
+        <label style="margin:0;">Vuelo directo (desmarcar si tiene escala)</label>
+      </div>
+    </div>
+    <div class="row">
+      <div><label>Espera en escala (hs, dejar vacío si es directo)</label><input type="text" name="vuelo___IDX___espera"></div>
+      <div><label>Aeropuerto de la escala</label><input type="text" name="vuelo___IDX___aeropuerto_escala"></div>
+    </div>
+  </div>
+</template>
+
+<h2>Nota importante (asistencia / early-late checkout)</h2>
+<label>Elegí una opción — no se deja sin definir *</label>
+<select name="nota_opcion" required>
+  <option value="">— Elegir —</option>
+  <option value="ninguna">No incluir nota (todo incluido / no aplica)</option>
+  <option value="no_asistencia">No incluye asistencia al viajero</option>
+  <option value="no_checkinout">No incluye early check-in ni late check-out</option>
+  <option value="ambas">No incluye asistencia NI early check-in/late check-out</option>
+</select>

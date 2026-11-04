@@ -1,0 +1,33 @@
+{% if vuelos %}
+<div class="section">
+  <div class="section-title"><div class="bar"></div><h2>Detalle de vuelos</h2></div>
+  {% for v in vuelos %}
+  <div class="flight-card">
+    <div class="tag">{{ v.tag }}</div>
+    <div class="flight-row">
+      <div class="flight-leg">
+        <div class="date">{{ v.fecha_origen }}</div>
+        <div class="time-city">{{ v.hora_origen }} <span class="code">{{ v.iata_origen }}</span></div>
+        <div class="airport">{{ v.aeropuerto_origen }}</div>
+      </div>
+      <div class="flight-mid">&#9992;<div class="line"></div>{{ 'directo' if v.directo else 'escala' }}</div>
+      <div class="flight-leg" style="text-align:right;">
+        <div class="date">{{ v.fecha_destino }}</div>
+        <div class="time-city">{{ v.hora_destino }} <span class="code">{{ v.iata_destino }}</span></div>
+        <div class="airport">{{ v.aeropuerto_destino }}</div>
+      </div>
+      <div class="flight-airline">{% if v.logo %}<img src="{{ img_base }}/{{ v.logo }}">{% endif %}</div>
+    </div>
+    {% if v.espera %}
+    <div class="flight-row flight-wait">
+      <div class="flight-leg" style="flex:0 0 100%;">
+        <div class="airport">&#8987; Espera de {{ v.espera }} hs en {{ v.aeropuerto_escala or 'escala' }} (cambio de avión)</div>
+      </div>
+    </div>
+    {% endif %}
+    <div class="flight-meta">Vuelo {{ v.aerolinea }} {{ v.numero_vuelo }}{% if v.duracion %} &middot; Duración {{ v.duracion }} hs.{% endif %}</div>
+    <div class="flight-summary">Duración total del vuelo: {{ v.duracion_total or v.duracion }} hs. &middot; Vuelo {{ 'directo' if v.directo else 'con escala' }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}

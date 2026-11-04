@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:420px;margin:40px auto;">
+  <h1>Crear cuenta</h1>
+  <form method="post">
+    <label>Nombre y apellido</label>
+    <input type="text" name="name" required>
+    <label>Email</label>
+    <input type="email" name="email" required>
+    <label>Teléfono (para firmar tus cotizaciones)</label>
+    <input type="text" name="phone" placeholder="+54 9 ...">
+    <label>Contraseña</label>
+    <input type="password" name="password" required>
+    <div style="margin-top:20px;">
+      <button class="btn" type="submit">Crear cuenta</button>
+    </div>
+  </form>
+  <p style="margin-top:16px; font-size:13px;">¿Ya tenés cuenta? <a href="{{ url_for('login') }}">Iniciá sesión</a>.</p>
+</div>
+{% endblock %}

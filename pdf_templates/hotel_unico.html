@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+{% include "_shared_css.html" %}
+</head>
+<body>
+
+{% include "_header_hero_facts.html" %}
+{% include "_servicios.html" %}
+{% include "_vuelos.html" %}
+
+<div class="section">
+  <div class="section-title"><div class="bar"></div><h2>Hotel previsto</h2></div>
+  <div class="hotels">
+    <div class="hotel-card">
+      <div class="place">{{ hotel.ciudad }}</div>
+      <div class="name">{{ hotel.nombre }}</div>
+      <div class="nights">{{ hotel.noches }} noches de alojamiento{% if hotel.regimen %} &middot; {{ hotel.regimen }}{% endif %}</div>
+    </div>
+  </div>
+</div>
+
+{% include "_nota.html" %}
+{% include "_precio.html" %}
+{% include "_pago_cond_cierre.html" %}
+
+</body>
+</html>

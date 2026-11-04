@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h1>Historial de cotizaciones</h1>
+  <p class="hint">{% if ve_todas %}Estás viendo las cotizaciones de todo el equipo.{% else %}Estás viendo solo tus cotizaciones.{% endif %}</p>
+  <table>
+    <thead><tr><th>Fecha</th><th>Tipo</th><th>Destino</th><th>Cliente</th>{% if ve_todas %}<th>Asesor</th>{% endif %}<th></th></tr></thead>
+    <tbody>
+      {% for q in quotes %}
+      <tr>
+        <td>{{ q['created_at'] }}</td>
+        <td><span class="pill">{{ {'hotel_unico':'Hotel único','multi_hotel':'Multi-hotel','itinerario':'Itinerario'}[q['tipo']] }}</span></td>
+        <td>{{ q['destino'] }}</td>
+        <td>{{ q['cliente'] or '—' }}</td>
+        {% if ve_todas %}<td>{{ q['user_name'] }}</td>{% endif %}
+        <td><a href="{{ url_for('descargar', filename=q['pdf_filename']) }}" target="_blank">Descargar PDF</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6">Todavía no generaste ninguna cotización.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{# Bloque común: condiciones + forma de pago + asesor #}
+<h2>Condiciones</h2>
+<label>Una condición por línea *</label>
+<textarea name="condiciones" style="min-height:160px;">{{ condiciones_default }}</textarea>
+
+<h2>Forma de pago</h2>
+<div class="checkbox-row">
+  <input type="checkbox" name="omitir_pago" id="omitir_pago" onchange="document.getElementById('pago-container').style.display = this.checked ? 'none' : 'block';">
+  <label for="omitir_pago" style="margin:0;">No tengo estos datos todavía — omitir sección de forma de pago</label>
+</div>
+<div id="pago-container">
+  <div class="row">
+    <div><label>Seña de reserva *</label><input type="text" name="sena" placeholder="Ej: USD 150 por pasajero"></div>
+    <div><label>Saldo *</label><input type="text" name="saldo" placeholder="Ej: 15 días antes de la salida"></div>
+    <div><label>Medios de pago *</label><input type="text" name="medios_pago" value="USD · efectivo, transferencia o depósito bancario"></div>
+  </div>
+</div>
+<label>Validez de la cotización / mínimo de pasajeros (opcional)</label>
+<input type="text" name="validez" placeholder="Ej: Válida hasta el 15/12 o agotar cupos. Mínimo 2 pasajeros.">
+
+<h2>Asesor que firma</h2>
+<div class="row">
+  <div><label>Nombre *</label><input type="text" name="asesor_nombre" value="{{ default_advisor.nombre }}" required></div>
+  <div><label>Teléfono *</label><input type="text" name="asesor_telefono" value="{{ default_advisor.telefono }}" required></div>
+  <div><label>Email (opcional)</label><input type="text" name="asesor_email" value="{{ default_advisor.email }}"></div>
+</div>
+
+<div style="margin-top:26px;">
+  <button class="btn" type="submit">Generar PDF</button>
+  <a class="btn btn-outline" href="{{ url_for('nueva_tipo') }}">Cancelar</a>
+</div>

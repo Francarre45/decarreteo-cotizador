@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+{% include "_shared_css.html" %}
+</head>
+<body>
+
+{% include "_header_hero_facts.html" %}
+{% include "_servicios.html" %}
+{% include "_vuelos.html" %}
+
+<div class="section" style="page-break-before: always;">
+  <div class="section-title"><div class="bar"></div><h2>Itinerario día a día</h2></div>
+  {% for d in dias %}
+  <div class="day-card">
+    <div class="day-tag">Día {{ d.numero }} &middot; {{ d.fecha_label }} &middot; {{ d.ciudad }}</div>
+    <div class="day-body">
+      {% if d.intro %}<div class="intro">{{ d.intro }}</div>{% endif %}
+      {% if d.actividades %}
+      <ul>
+        {% for a in d.actividades %}<li>{{ a }}</li>{% endfor %}
+      </ul>
+      {% endif %}
+      {% if d.tip %}<div class="tip">{{ d.tip }}</div>{% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="section" style="page-break-before: always;">
+  <div class="section-title"><div class="bar"></div><h2>Hoteles previstos por ciudad (o similares)</h2></div>
+
+  {% if hoteles_modo == 'simple' %}
+  <div class="simple-hotel-list">
+    {% for h in hoteles_simple %}
+    <div class="simple-hotel-row"><div class="city">{{ h.ciudad }}</div><div class="hname">{{ h.nombre }}</div></div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="hotel-list">
+    {% for h in hoteles_con_precio %}
+    <div class="hotel-row">
+      <div class="rank">{{ loop.index }}</div>
+      <div class="hotel-info"><div class="name">{{ h.nombre }}</div></div>
+      <div class="tagline">{{ h.regimen }} &middot; {{ h.noches }} noches</div>
+      <div class="price-block"><div class="lbl">Precio</div><div class="amt"><span class="cur">USD</span>{{ h.precio }}</div></div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+{% if incluye or no_incluye %}
+<div class="section">
+  <div class="section-title"><div class="bar"></div><h2>Incluye / No incluye</h2></div>
+  <div class="incnoinc">
+    <div>
+      <h3>El precio incluye</h3>
+      <ul>{% for i in incluye %}<li>{{ i }}</li>{% endfor %}</ul>
+    </div>
+    <div class="negative">
+      <h3>No incluye</h3>
+      <ul>{% for i in no_incluye %}<li>{{ i }}</li>{% endfor %}</ul>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% include "_nota.html" %}
+<div style="page-break-before: always;">
+{% include "_precio.html" %}
+</div>
+{% include "_pago_cond_cierre.html" %}
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+decarreteo.db
+generated_pdfs/*.pdf
+.env

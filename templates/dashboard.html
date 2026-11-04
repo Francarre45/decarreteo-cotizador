@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h1>Hola, {{ user['name'] }} 👋</h1>
+  <p>Generá una cotización nueva o revisá tu historial.</p>
+  <a class="btn" href="{{ url_for('nueva_tipo') }}">+ Nueva cotización</a>
+  <a class="btn btn-outline" style="margin-left:10px;" href="{{ url_for('historial') }}">Ver historial</a>
+</div>
+{% endblock %}

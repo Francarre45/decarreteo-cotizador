@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: decarreteo-cotizador
+    env: docker
+    plan: free
+    envVars:
+      - key: DECARRETEO_SECRET
+        generateValue: true
+    healthCheckPath: /login

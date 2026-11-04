@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h1>Nueva cotización · Multi-hotel</h1>
+  <form method="post">
+    {% include "_form_top.html" %}
+
+    <h2>Opciones de alojamiento (2 a 4)</h2>
+    <p class="hint">Se ordenan automáticamente de menor a mayor precio al generar el PDF.</p>
+    <div id="hoteles-list"></div>
+    <button type="button" class="btn btn-outline" onclick="addHotelMulti()">+ Agregar opción de hotel</button>
+    <input type="hidden" name="hoteles_count" id="hoteles_count" value="0">
+    <template id="hotel-multi-template">
+      <div class="repeat-block" data-idx="__IDX__">
+        <button type="button" class="remove-btn" onclick="removeAndCount(this,'hoteles-list','hoteles_count')">Quitar</button>
+        <div class="row">
+          <div><label>Nombre del hotel</label><input type="text" name="hotel___IDX___nombre"></div>
+          <div><label>Régimen</label><input type="text" name="hotel___IDX___regimen" placeholder="Desayuno"></div>
+          <div><label>Noches</label><input type="text" name="hotel___IDX___noches"></div>
+          <div><label>Precio (USD)</label><input type="text" name="hotel___IDX___precio"></div>
+        </div>
+      </div>
+    </template>
+    <label>Aclaración opcional (ej: regímenes distintos por hotel)</label>
+    <input type="text" name="hotel_nota">
+
+    {% include "_form_bottom.html" %}
+  </form>
+</div>
+<script src="{{ url_for('static', filename='js/form.js') }}"></script>
+<script>
+  addHotelMulti(); addHotelMulti();
+</script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h1>¿Qué tipo de cotización vas a armar?</h1>
+  <div class="row" style="margin-top:20px; gap:16px;">
+    <a class="card" style="text-align:center; display:block;" href="{{ url_for('nueva_formulario', tipo='hotel_unico') }}">
+      <h2 style="border:none; padding:0;">🏨 Hotel único</h2>
+      <p class="hint">Un solo hotel, con una o dos tarifas (ej. base doble + plan familiar).</p>
+    </a>
+    <a class="card" style="text-align:center; display:block;" href="{{ url_for('nueva_formulario', tipo='multi_hotel') }}">
+      <h2 style="border:none; padding:0;">🏨🏨 Multi-hotel</h2>
+      <p class="hint">2 a 4 opciones de hotel para el mismo destino y fechas.</p>
+    </a>
+    <a class="card" style="text-align:center; display:block;" href="{{ url_for('nueva_formulario', tipo='itinerario') }}">
+      <h2 style="border:none; padding:0;">🗺️ Itinerario / circuito</h2>
+      <p class="hint">Día por día, con varias ciudades y/o hoteles.</p>
+    </a>
+  </div>
+</div>
+{% endblock %}

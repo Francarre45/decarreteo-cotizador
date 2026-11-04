@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h1>Nueva cotización · Itinerario / circuito</h1>
+  <form method="post">
+    {% include "_form_top.html" %}
+
+    <h2>Itinerario día a día</h2>
+    <div id="dias-list"></div>
+    <button type="button" class="btn btn-outline" onclick="addDia()">+ Agregar día</button>
+    <input type="hidden" name="dias_count" id="dias_count" value="0">
+    <template id="dia-template">
+      <div class="repeat-block" data-idx="__IDX__">
+        <button type="button" class="remove-btn" onclick="removeAndCount(this,'dias-list','dias_count')">Quitar</button>
+        <div class="row">
+          <div><label>Día N°</label><input type="text" name="dia___IDX___numero" placeholder="1"></div>
+          <div><label>Fecha / día de semana</label><input type="text" name="dia___IDX___fecha" placeholder="Lun 12/01"></div>
+          <div><label>Ciudad</label><input type="text" name="dia___IDX___ciudad"></div>
+        </div>
+        <label>Resumen del día (1-2 frases)</label>
+        <input type="text" name="dia___IDX___intro">
+        <label>Actividades (una por línea, opcional)</label>
+        <textarea name="dia___IDX___actividades"></textarea>
+        <label>Tip / nota especial (opcional)</label>
+        <input type="text" name="dia___IDX___tip">
+      </div>
+    </template>
+
+    <h2>Hoteles previstos por ciudad</h2>
+    <div class="row">
+      <label style="display:flex;align-items:center;gap:6px;"><input type="radio" name="hoteles_modo" value="simple" checked onchange="toggleHotelesModo()"> Lista simple (ciudad + hotel, sin precio)</label>
+      <label style="display:flex;align-items:center;gap:6px;"><input type="radio" name="hoteles_modo" value="precio" onchange="toggleHotelesModo()"> Con precio por opción</label>
+    </div>
+
+    <div id="hoteles-modo-simple">
+      <div id="hoteles-simple-list"></div>
+      <button type="button" class="btn btn-outline" onclick="addHotelSimple()">+ Agregar ciudad/hotel</button>
+      <input type="hidden" name="hoteles_simple_count" id="hoteles_simple_count" value="0">
+      <template id="hotel-simple-template">
+        <div class="repeat-block" data-idx="__IDX__">
+          <button type="button" class="remove-btn" onclick="removeAndCount(this,'hoteles-simple-list','hoteles_simple_count')">Quitar</button>
+          <div class="row">
+            <div><label>Ciudad</label><input type="text" name="hs___IDX___ciudad"></div>
+            <div><label>Hotel</label><input type="text" name="hs___IDX___nombre"></div>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <div id="hoteles-modo-precio" style="display:none;">
+      <div id="hoteles-precio-list"></div>
+      <button type="button" class="btn btn-outline" onclick="addHotelPrecioItin()">+ Agregar opción con precio</button>
+      <input type="hidden" name="hoteles_precio_count" id="hoteles_precio_count" value="0">
+      <template id="hotel-precio-template">
+        <div class="repeat-block" data-idx="__IDX__">
+          <button type="button" class="remove-btn" onclick="removeAndCount(this,'hoteles-precio-list','hoteles_precio_count')">Quitar</button>
+          <div class="row">
+            <div><label>Hotel</label><input type="text" name="hp___IDX___nombre"></div>
+            <div><label>Régimen</label><input type="text" name="hp___IDX___regimen"></div>
+            <div><label>Noches</label><input type="text" name="hp___IDX___noches"></div>
+            <div><label>Precio (USD)</label><input type="text" name="hp___IDX___precio"></div>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <h2>Incluye / No incluye (opcional — ej. operador mayorista)</h2>
+    <div class="row">
+      <div><label>El precio incluye (una línea por ítem)</label><textarea name="incluye"></textarea></div>
+      <div><label>No incluye (una línea por ítem)</label><textarea name="no_incluye"></textarea></div>
+    </div>
+
+    <h2>Tarifa</h2>
+    <div class="checkbox-row">
+      <input type="checkbox" name="hay_precio" id="hay_precio" onchange="togglePrecioItin()">
+      <label for="hay_precio" style="margin:0;">Hay tarifa confirmada para este circuito</label>
+    </div>
+    <div id="precio-itin-container" style="display:none;">
+      <div id="precios-list"></div>
+      <button type="button" class="btn btn-outline" onclick="addPrecio()">+ Agregar tarifa</button>
+      <input type="hidden" name="precios_count" id="precios_count" value="0">
+      <template id="precio-template">
+        <div class="repeat-block" data-idx="__IDX__">
+          <button type="button" class="remove-btn" onclick="removeAndCount(this,'precios-list','precios_count')">Quitar</button>
+          <div class="row">
+            <div><label>Etiqueta</label><input type="text" name="precio___IDX___label" placeholder="Tarifa por pasajero en base doble"></div>
+            <div><label>Monto (USD)</label><input type="text" name="precio___IDX___monto"></div>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    {% include "_form_bottom.html" %}
+  </form>
+</div>
+<script src="{{ url_for('static', filename='js/form.js') }}"></script>
+<script>
+  addDia();
+  addHotelSimple();
+</script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% if not omitir_pago %}
+<div class="section">
+  <div class="section-title"><div class="bar"></div><h2>Formas de pago</h2></div>
+  <div class="payment">
+    <div class="pay-card"><div class="k">Seña de reserva</div><div class="v">{{ sena }}</div></div>
+    <div class="pay-card"><div class="k">Saldo</div><div class="v">{{ saldo }}</div></div>
+    <div class="pay-card"><div class="k">Medios de pago</div><div class="v">{{ medios_pago }}</div></div>
+  </div>
+  {% if validez %}
+  <div class="validity-note" style="margin-top:3mm;"><b>Validez de la cotización:</b> {{ validez }}</div>
+  {% endif %}
+</div>
+{% endif %}
+
+<div class="section">
+  <div class="section-title"><div class="bar"></div><h2>Condiciones</h2></div>
+  <ul class="cond-list">
+    {% for c in condiciones %}
+    <li>{{ c }}</li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div class="closing">
+  ¡Gracias por considerar a <b>Decarreteo.com</b> para tus viajes! Comunicate con nosotros antes de que venza la validez para asegurar la tarifa y la disponibilidad.<br><br>
+  Espero que esta cotización te sea útil. Si tenés alguna otra solicitud, estaré encantado de ayudarte. ¡Buen viaje!
+</div>
+
+<div class="signature">
+  <div class="avatar">{{ asesor_iniciales }}</div>
+  <div class="info">
+    <b>{{ asesor_nombre }}</b>
+    <div class="role">Asesor de viajes &middot; Nuestro destino sos vos</div>
+    <div class="contact">Tel: {{ asesor_telefono }}{% if asesor_email %} &nbsp;&nbsp;|&nbsp;&nbsp; Mail: {{ asesor_email }}{% endif %}</div>
+  </div>
+</div>
